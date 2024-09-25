@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import API_BASE_URL from '../config';
 
-const UserProfile = () => {
+const UserProfile = ({ userId }) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      // Placeholder API call to fetch user profile details
-      const response = await fetch('/api/user-profile');
-      const data = await response.json();
-      setUser(data);
+      try {
+        const response = await fetch(`${API_BASE_URL}/user-profile/${userId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch user profile');
+        }
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
     };
 
     fetchUserProfile();
-  }, []);
+  }, [userId]);
 
   return (
     <Container>
@@ -27,7 +34,7 @@ const UserProfile = () => {
                 <strong>Email:</strong> {user.email}
               </Card.Text>
               <Card.Text>
-                <strong>Member since:</strong> {user.memberSince}
+                <strong>Member since:</strong> {new Date(user.memberSince).toLocaleDateString()}
               </Card.Text>
               <Link to="/history">
                 <Button variant="primary">View Borrowing History</Button>

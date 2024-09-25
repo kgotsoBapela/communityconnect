@@ -1,14 +1,22 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import API_BASE_URL from '../config';
 
-const BorrowButton = ({ bike }) => {
+const BorrowButton = ({ bike, userId }) => {
   const handleBorrow = async () => {
-    // Placeholder for API call to borrow the bike
     try {
-      const response = await fetch(`/api/borrow/${bike.id}`, { method: 'POST' });
+      const response = await fetch(`${API_BASE_URL}/borrow/${bike.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId }),  // Send userId with the request
+      });
+
       if (response.ok) {
-        alert('Bike borrowed successfully!');
-        // Update UI or reload available bikes
+        const result = await response.json();
+        alert(result.message);
+        // Optionally refresh the bike list
       } else {
         alert('Error borrowing the bike.');
       }
@@ -29,3 +37,4 @@ const BorrowButton = ({ bike }) => {
 };
 
 export default BorrowButton;
+
