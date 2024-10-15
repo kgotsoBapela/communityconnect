@@ -1,53 +1,50 @@
-// src/components/Login.js
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 
-const Login = () => {
+const Login = ({ show, handleClose, handleLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/api/login', { username, password });
-      alert('Login successful!');
-    } catch (error) {
-      alert('Login failed!');
-    }
+    handleLogin(username, password);
   };
 
   return (
-    <Container className="mt-5">
-      <h2>Login</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            placeholder="Enter username"
-          />
-        </Form.Group>
+    <Modal show={show} onHide={handleClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Login to CCxStandert</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formUsername">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            placeholder="Password"
-          />
-        </Form.Group>
+          <Form.Group controlId="formPassword" className="mt-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Login
-        </Button>
-      </Form>
-    </Container>
+          <Button variant="primary" type="submit" className="mt-4">
+            Login
+          </Button>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 };
 

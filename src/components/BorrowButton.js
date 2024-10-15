@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import API_BASE_URL from '../config';
 
 const BorrowButton = ({ bike, userId }) => {
-  const handleBorrow = async () => {
+    const handleBorrow = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/borrow/${bike.id}`, {
         method: 'POST',
