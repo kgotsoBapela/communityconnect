@@ -12,6 +12,7 @@ const BikeList = ({ userRole, handleShowLogin }) => {
   // Fetch available bikes from the backend API
   useEffect(() => {
     const fetchBikes = async () => {
+      
       try {
         const response = await fetch(`${API_BASE_URL}/bikes`); // Fetch from backend
         if (!response.ok) {

@@ -25,6 +25,9 @@ return (
             <LinkContainer to="/history">
               <Nav.Link>Borrowing History</Nav.Link>
             </LinkContainer>
+            <LinkContainer to="/About">
+              <Nav.Link>About</Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -8,6 +8,8 @@ import NavigationBar from './components/NavigationBar';
 import BikeDetails from './components/BikeDetails';
 import { Button } from 'react-bootstrap';
 import Login from './components/Login';
+import About from './components/AboutUs';
+import axios from 'axios';
 
 
 const App = () => {
@@ -69,7 +71,8 @@ const App = () => {
           <Route path="/" element={<BikeList userRole={userRole} handleShowLogin={handleShowLogin}/>} />
           <Route path="/history" element={<BorrowingHistory/>} />
           <Route path="/profile" element={<UserProfile userId={'1'}/>} />
-          <Route path="/bikes/:id" element={BikeDetails} />  {/* Bike Details route */}
+          <Route path="/about" element={<About/>} />
+          {/* <Route path="/bikes/:id" element={BikeDetails} />  Bike Details route */}
         </Routes>
       </div>
     </Router>
