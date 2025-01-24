@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import BikeCard from './BikeCard';
-import SearchBar from './SearchBar';
+import SearchBar from './SearchBar.js';
 import API_BASE_URL from '../config';
 
 const BikeList = ({ userRole, handleShowLogin }) => {
