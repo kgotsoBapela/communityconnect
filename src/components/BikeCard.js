@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
-import BorrowButton from './BorrowButton';
+// import BorrowButton from './BorrowButton';
 // import Login from './Login';
 
 const BikeCard = ({ bike, userRole, handleShowLogin }) => {
