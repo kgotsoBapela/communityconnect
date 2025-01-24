@@ -5,34 +5,43 @@ import BorrowingHistory from './components/BorrowingHistory';
 // import DueDateNotification from './components/DueDateNotification';
 import UserProfile from './components/UserProfile';
 import NavigationBar from './components/NavigationBar';
-import BikeDetails from './components/BikeDetails';
-import { Button } from 'react-bootstrap';
+// import BikeDetails from './components/BikeDetails';
+// import { Button } from 'react-bootstrap';
 import Login from './components/Login';
 import About from './components/AboutUs';
-import axios from 'axios';
+// import axios from 'axios';
 
 
 const App = () => {
   // State for login modal visibility and user role
   const [showLogin, setShowLogin] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  const [userID, setUserID] = useState(null);
 
   const handleShowLogin = () => setShowLogin(true);
   const handleCloseLogin = () => setShowLogin(false);
 
-  // Login handler function to assign user roles
-  const handleLogin = (username, password) => {
-    if (username === 'admin' && password === 'admin123') {
-      setUserRole('admin');
-      alert('Logged in as Admin');
-    } else if (username === 'user' && password === 'user123') {
-      setUserRole('user');
-      alert('Logged in as User');
-    } else {
-      alert('Invalid credentials');
-    }
-    handleCloseLogin();
+  // Function called on successful login
+  const handleLoginSuccess = (userID, role) => {
+    setUserID(userID);
+    setUserRole(role);
+    setShowLogin(false); // Close login modal on success
   };
+
+  // Login handler function to assign user roles
+  // const handleLogin = (username, password) => {
+  //   if (username === 'admin' && password === 'admin123') {
+  //     setUserRole('admin');
+  //     alert('Logged in as Admin');
+  //     handleCloseLogin();
+  //   } else if (username === 'user' && password === 'user123') {
+  //     setUserRole('user');
+  //     alert('Logged in as User');
+  //     handleCloseLogin();
+  //   } else {
+  //     alert('Invalid credentials');
+  //   }
+  // };
 
   useEffect(() => {
     // Optional: Perform role checks or fetch current user role on component mount
@@ -45,14 +54,8 @@ const App = () => {
       <NavigationBar />
       <div className="App">
 
-         {/* Button to trigger login modal */}
-         {/* <Button variant="primary" onClick={handleShowLogin} className="mt-4">
-          Login
-        </Button> */}
-
         {/* Login Modal */}
-        <Login show={showLogin} handleClose={handleCloseLogin} handleLogin={handleLogin} />
-
+        <Login show={showLogin} handleClose={handleCloseLogin} handleLogin={handleLoginSuccess} />
                 {/* Content based on user role */}
                 {userRole && (
           <div className="role-based-content">
@@ -70,7 +73,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<BikeList userRole={userRole} handleShowLogin={handleShowLogin}/>} />
           <Route path="/history" element={<BorrowingHistory/>} />
-          <Route path="/profile" element={<UserProfile userId={'1'}/>} />
+          <Route path="/profile" element={<UserProfile userId={'1'} />} />
           <Route path="/about" element={<About/>} />
           {/* <Route path="/bikes/:id" element={BikeDetails} />  Bike Details route */}
         </Routes>

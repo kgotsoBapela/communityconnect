@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {Container } from 'react-bootstrap';
 import axios from 'axios';
 
 const About = () => {
@@ -22,11 +23,12 @@ const About = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
       <h1>About Us</h1>
       <p>
-        Welcome to our website! Here you can learn more about our mission, values, and the team behind our work.
+        Welcome to <b>Community Connect x Standert</b> 
       </p>
+      <p>Bicycle collective of South Africa.</p>
       
       <h2>Our Team</h2>
       <p>
@@ -50,7 +52,7 @@ const About = () => {
           </div>
         ))}
       </div>
-    </div>
+    </Container>
   );
 };
 

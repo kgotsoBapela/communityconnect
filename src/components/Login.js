@@ -1,13 +1,34 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import API_BASE_URL from '../config';
 
 const Login = ({ show, handleClose, handleLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleLogin(username, password);
+
+    try {
+      // const response = await fetch('http://localhost:5000/api/login', {
+      // `${API_BASE_URL}/bikes`
+      const response = await fetch(`${API_BASE_URL}/user`);
+
+      if (response.ok) {
+        const data = await response.json();
+        handleLogin(data.userID, data.role);  // Pass userID and role to App.js
+        handleClose();  // Close modal on successful login
+      } else {
+        setError('Invalid credentials. Please try again.');
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again later.');
+      setErrorMessage(error.message); // Display error message
+    }
+    setUsername('');
+    setPassword('');
   };
 
   return (
@@ -16,6 +37,7 @@ const Login = ({ show, handleClose, handleLogin }) => {
         <Modal.Title>Login to CCxStandert</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formUsername">
             <Form.Label>Username</Form.Label>
